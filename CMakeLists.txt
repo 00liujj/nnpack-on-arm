@@ -64,4 +64,7 @@ set(LIB ${PROJECT_NAME})
 add_library(${LIB} SHARED ${SRC_FILES})
 target_link_libraries(${LIB} m)
 
-
+set(CMAKE_INSTALL_PREFIX ${PROJECT_BINARY_DIR}/install/${PROJECT_NAME})
+install(TARGETS ${LIB} DESTINATION lib)
+install(FILES include/nnpack.h include/pthreadpool.h DESTINATION include)
+install(TARGETS ${LIB} DESTINATION lib)
