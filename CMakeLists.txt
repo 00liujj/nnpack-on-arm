@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 2.8)
 if (NOT TOOLCHAIN)
   #set(TOOLCHAIN linux-gcc-4.6-arm-hard)
   #set(TOOLCHAIN linux-gcc-4.6-arm-softfp)
-  #set(TOOLCHAIN linux-gcc-4.9-arm-hard)
-  set(TOOLCHAIN linux-gcc-4.9-android-softfp)
+  set(TOOLCHAIN linux-gcc-4.9-arm-hard)
+  #set(TOOLCHAIN linux-gcc-4.9-android-softfp)
   #set(TOOLCHAIN linux-gcc-4.9-x86_64)
 endif ()
 
@@ -45,16 +45,19 @@ set(SRC_FILES
   src/neon/blas/s4c2gemm-conjb-transc.c
   src/neon/blas/sgemm.c
   src/neon/blas/sdotxf.c
-
   
   src/threadpool-pthreads.c  
-
-  ${ANDROID_NDK}/sources/android/cpufeatures/cpu-features.c
 )
 
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -mfpu=neon-fp16")
-include_directories(include src ${ANDROID_NDK}/sources/android/cpufeatures)
+
+include_directories(include src)
+
+if (ANDROID)
+  include_directories(${ANDROID_NDK}/sources/android/cpufeatures)
+  list(APPEND SRC_FILES ${ANDROID_NDK}/sources/android/cpufeatures/cpu-features.c)
+endif ()
 
 set(LIB ${PROJECT_NAME})
 
