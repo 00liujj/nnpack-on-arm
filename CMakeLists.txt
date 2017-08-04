@@ -1,17 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
 
-if (NOT TOOLCHAIN)
-  #set(TOOLCHAIN linux-gcc-4.6-arm-hard)
-  #set(TOOLCHAIN linux-gcc-4.6-arm-softfp)
-  set(TOOLCHAIN linux-gcc-4.9-arm-hard)
-  #set(TOOLCHAIN linux-gcc-4.9-android-softfp)
-  #set(TOOLCHAIN linux-gcc-4.9-x86_64)
-endif ()
-
-if (NOT CMAKE_TOOLCHAIN_FILE)
-  set(CMAKE_TOOLCHAIN_FILE /data/public-space/toolchains/${TOOLCHAIN}-toolchain.cmake)
-endif ()
-
 project(nnpack C CXX)
 
 set(SRC_FILES
@@ -61,7 +49,7 @@ endif ()
 
 set(LIB ${PROJECT_NAME})
 
-add_library(${LIB} SHARED ${SRC_FILES})
+add_library(${LIB} ${SRC_FILES})
 target_link_libraries(${LIB} m)
 
 set(CMAKE_INSTALL_PREFIX ${PROJECT_BINARY_DIR}/install/${PROJECT_NAME})
